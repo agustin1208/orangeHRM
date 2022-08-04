@@ -5,12 +5,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
 
-class adminnationalities (unittest.TestCase): 
+
+class pimreport(unittest.TestCase): 
 
     def setUp(self): 
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         browser = self.browser #buka web browser
-        browser.get("https://opensource-demo.orangehrmlive.com/index.php/admin/nationality") # buka situs
+        browser.get("https://opensource-demo.orangehrmlive.com/index.php/core/viewDefinedPredefinedReports/reportGroup/3/reportType/PIM_DEFINED") # buka situs
         time.sleep(3)
         browser.find_element(By.ID,"txtUsername").send_keys("admin") # isi email
         time.sleep(1)
@@ -18,34 +19,37 @@ class adminnationalities (unittest.TestCase):
         time.sleep(1)
         browser.find_element(By.ID,"btnLogin").click() # klik tombol sign in
         time.sleep(3)
+
     
-    def test_a_tambahnationalities (self): 
+    def test_a_carireport_invalid (self): 
         # steps
         browser = self.browser #buka web browser
         #mencari berdasarkan namanya
-        browser.find_element(By.XPATH,"/html[1]/body[1]/div[1]/div[3]/div[2]/div[1]/div[2]/form[1]/div[1]/input[1]").click() # isi email
+        browser.find_element(By.ID,"search_search").send_keys("admin") # isi email
         time.sleep(1)
-        browser.find_element(By.XPATH,"/html[1]/body[1]/div[1]/div[3]/div[1]/div[2]/form[1]/fieldset[1]/ol[1]/li[1]/input[1]").send_keys("indonesia1") # klik tombol sign in
+        browser.find_element(By.CLASS_NAME,"searchBtn").click() # klik tombol sign in
         time.sleep(3)
-        browser.find_element(By.XPATH,"/html[1]/body[1]/div[1]/div[3]/div[1]/div[2]/form[1]/fieldset[1]/p[1]/input[1]").click()
+        # validasi
+        response_data =browser.find_element(By.ID,"frmList_ohrmListComponent").text
+        self.assertNotEqual(response_data,"No Records Found")
         time.sleep(5)
 
-  
 
-
-    def test_a_hapusnationalities (self): 
+    def test_a_carireport_valid (self): 
         # steps
         browser = self.browser #buka web browser
         #mencari berdasarkan namanya
-        browser.find_element(By.ID,"ohrmList_chkSelectRecord_219").click() # isi email
+        browser.find_element(By.ID,"search_search").send_keys("PIM Sample Report") # isi email
+        time.sleep(1)
+        browser.find_element(By.CLASS_NAME,"searchBtn").click() # klik tombol sign in
         time.sleep(3)
-        browser.find_element(By.ID,"btnDelete").click()
-        time.sleep(3)
-        browser.find_element(By.ID,"dialogDeleteBtn").click()
-        time.sleep(3)
-    
+        # validasi
+        response_data =browser.find_element(By.ID,"frmList_ohrmListComponent").text
+        self.assertNotEqual(response_data,"PIM Sample Report")
+        time.sleep(5)
         
-        
+
+
 
     def tearDown(self): 
         self.browser.close() 
