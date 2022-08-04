@@ -1,0 +1,44 @@
+import unittest
+import time
+from selenium import webdriver 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+class leave(unittest.TestCase): 
+
+    def setUp(self): 
+        self.browser = webdriver.Chrome(ChromeDriverManager().install())
+        browser = self.browser #buka web browser
+        browser.get("https://opensource-demo.orangehrmlive.com/index.php/time/viewEmployeeTimesheet") # buka situs
+        time.sleep(3)
+        browser.find_element(By.ID,"txtUsername").send_keys("admin") # isi email
+        time.sleep(1)
+        browser.find_element(By.ID,"txtPassword").send_keys("admin123") # isi password
+        time.sleep(1)
+        browser.find_element(By.ID,"btnLogin").click() # klik tombol sign in
+        time.sleep(3)
+    
+    def test_a_timesheet (self): 
+        # steps
+        browser = self.browser #buka web browser
+        #mencari berdasarkan namanya
+        browser.find_element(By.ID,"employee").click() # isi email
+        time.sleep(1)
+        browser.find_element(By.ID,"employee").send_keys("kkkk") # isi email
+        time.sleep(1)
+        browser.find_element(By.ID,"btnView").click() # klik tombol sign in
+        time.sleep(3)
+        # validasi
+        response_data =browser.find_element(By.ID,"validation-error").text
+        self.check_response(response_data)
+        time.sleep(5)
+
+
+
+    def tearDown(self): 
+        self.browser.close() 
+
+if __name__ == "__main__": 
+    unittest.main()
