@@ -6,12 +6,12 @@ from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-class time(unittest.TestCase): 
+class recruitment(unittest.TestCase): 
 
     def setUp(self): 
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         browser = self.browser #buka web browser
-        browser.get("https://opensource-demo.orangehrmlive.com/index.php/time/viewEmployeeTimesheet") # buka situs
+        browser.get("https://opensource-demo.orangehrmlive.com/index.php/recruitment/viewJobVacancy") # buka situs
         time.sleep(3)
         browser.find_element(By.ID,"txtUsername").send_keys("admin") # isi email
         time.sleep(1)
@@ -20,21 +20,21 @@ class time(unittest.TestCase):
         browser.find_element(By.ID,"btnLogin").click() # klik tombol sign in
         time.sleep(3)
     
-    def test_a_timesheet (self): 
+    def test_a_search_jobvacancies (self): 
         # steps
         browser = self.browser #buka web browser
-        #mencari berdasarkan namanya
-        browser.find_element(By.ID,"employee").click() # isi email
+        #mencari berdasarkan nama job nya
+        select = Select(browser.find_element(By.ID,"vacancySearch_jobTitle"))
         time.sleep(1)
-        browser.find_element(By.ID,"employee").send_keys("kkkk") # isi email
-        time.sleep(1)
-        browser.find_element(By.ID,"btnView").click() # klik tombol sign in
+        select.select_by_value('1')
+       
+        browser.find_element(By.ID,"btnSrch").click() # klik tombol sign in
         time.sleep(3)
         # validasi
-        response_data =browser.find_element(By.CLASS_NAME,"validation-error").text
-        self.assertNotEqual(response_data,"Invalid")
-        time.sleep(5)
-
+        response_data =browser.find_element(By.XPATH,"//td[contains(text(),'Chief Executive Officer')]").text
+        self.assertEqual(response_data,"Chief Executive Officer")
+        time.sleep(10)
+       
 
 
     def tearDown(self): 
