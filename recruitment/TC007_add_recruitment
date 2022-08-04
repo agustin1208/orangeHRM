@@ -1,0 +1,56 @@
+import unittest
+import time
+from selenium import webdriver 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+class addrecruitment(unittest.TestCase): 
+
+    def setUp(self): 
+        self.browser = webdriver.Chrome(ChromeDriverManager().install())
+        browser = self.browser #buka web browser
+        browser.get("https://opensource-demo.orangehrmlive.com/index.php/recruitment/viewJobVacancy") # buka situs
+        time.sleep(3)
+        browser.find_element(By.ID,"txtUsername").send_keys("admin") # isi email
+        time.sleep(1)
+        browser.find_element(By.ID,"txtPassword").send_keys("admin123") # isi password
+        time.sleep(1)
+        browser.find_element(By.ID,"btnLogin").click() # klik tombol sign in
+        time.sleep(3)
+
+    def test_a_add_jobvacancies (self): 
+        # steps
+        browser = self.browser #buka web browser
+        #mencari berdasarkan nama job nya
+        browser.find_element(By.ID,"btnAdd").click() # klik tombol sign in
+        time.sleep(3)
+        select = Select(browser.find_element(By.ID,"addJobVacancy_jobTitle"))
+        time.sleep(1)
+        select.select_by_value('9')
+        browser.find_element(By.ID,"addJobVacancy_name").send_keys("qa1") # isi email
+        time.sleep(1)
+        browser.find_element(By.ID,"addJobVacancy_hiringManager").click() # klik tombol sign in
+        time.sleep(3)
+        browser.find_element(By.ID,"addJobVacancy_hiringManager").send_keys("Pallavi Jadhav") # isi email
+        time.sleep(1)
+        browser.find_element(By.ID,"btnSave").click() # klik tombol sign in
+        time.sleep(3)
+        
+        
+       
+        
+        # validasi
+        
+
+       
+
+
+    def tearDown(self): 
+        self.browser.close() 
+
+if __name__ == "__main__": 
+    unittest.main()
+
+    

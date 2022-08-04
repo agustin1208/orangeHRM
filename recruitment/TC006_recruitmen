@@ -20,7 +20,7 @@ class recruitment(unittest.TestCase):
         browser.find_element(By.ID,"btnLogin").click() # klik tombol sign in
         time.sleep(3)
     
-    def test_a_search_jobvacancies (self): 
+    def test_a_search_jobtitle (self): 
         # steps
         browser = self.browser #buka web browser
         #mencari berdasarkan nama job nya
@@ -33,7 +33,30 @@ class recruitment(unittest.TestCase):
         # validasi
         response_data =browser.find_element(By.XPATH,"//td[contains(text(),'Chief Executive Officer')]").text
         self.assertEqual(response_data,"Chief Executive Officer")
-        time.sleep(10)
+        time.sleep(5)
+        browser.find_element(By.ID,"btnRst").click() # klik tombol sign in
+        time.sleep(3)
+    
+    def test_a_search_jobvacancies (self): 
+        # steps
+        browser = self.browser #buka web browser
+        #mencari berdasarkan nama job nya
+        select = Select(browser.find_element(By.ID,"vacancySearch_jobVacancy"))
+        time.sleep(1)
+        select.select_by_value('1')
+       
+        browser.find_element(By.ID,"btnSrch").click() # klik tombol sign in
+        time.sleep(3)
+        # validasi
+        response_data =browser.find_element(By.XPATH,"//td[contains(text(),'Software Engineer')]").text
+        self.assertEqual(response_data,"Software Engineer")
+        
+        time.sleep(5)
+        browser.find_element(By.ID,"btnRst").click() # klik tombol sign in
+        time.sleep(3)
+
+        
+   
        
 
 
