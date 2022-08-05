@@ -6,12 +6,12 @@ from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-class addrecruitment(unittest.TestCase): 
+class myinfojob(unittest.TestCase): 
 
     def setUp(self): 
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         browser = self.browser #buka web browser
-        browser.get("https://opensource-demo.orangehrmlive.com/index.php/recruitment/viewJobVacancy") # buka situs
+        browser.get("https://opensource-demo.orangehrmlive.com/index.php/performance/viewEmployeePerformanceTrackerList") # buka situs
         time.sleep(3)
         browser.find_element(By.ID,"txtUsername").send_keys("admin") # isi email
         time.sleep(1)
@@ -24,23 +24,16 @@ class addrecruitment(unittest.TestCase):
         # steps
         browser = self.browser #buka web browser
         #mencari berdasarkan nama job nya
-        browser.find_element(By.ID,"btnAdd").click() # klik tombol sign in
-        time.sleep(3)
-        select = Select(browser.find_element(By.ID,"addJobVacancy_jobTitle"))
+        browser.find_element(By.ID,"menu_performance_viewEmployeePerformanceTrackerList").click() # isi email
         time.sleep(1)
-        select.select_by_value('9')
-        browser.find_element(By.ID,"addJobVacancy_name").send_keys("qa4") # isi email
-        time.sleep(1)
-        browser.find_element(By.ID,"addJobVacancy_hiringManager").click() # klik tombol sign in
-        time.sleep(3)
-        browser.find_element(By.ID,"addJobVacancy_hiringManager").send_keys("Prajakta Dhumal") # isi email
-        time.sleep(1)
-        browser.find_element(By.ID,"btnSave").click() # klik tombol sign in
-        time.sleep(3)        
-        # validasi
-        response_data =browser.find_element(By.ID,"btnSave").text
-        self.assertNotEqual(response_data,"Edit")
+
+        response_data =browser.find_element(By.XPATH,"//body/div[@id='wrapper']/div[@id='content']/div[@id='mainDiv']/div[@id='search-results']/div[2]").text
+        self.assertNotEqual(response_data,"")
         time.sleep(5)
+
+    
+        time.sleep(5)
+     
         
 
        
